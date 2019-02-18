@@ -1,8 +1,141 @@
 # Development guidelines
 
-These are the development/coding guidelines for eZ Platform kernel, they are the same if you intend to write Bundles, hack on eZ Platform itself or create new functionality for or on top of eZ Platform.
+These are the development/coding guidelines for eZ Platform packages. They are the same if you
+intend to write Bundles, hack on eZ Platform itself or create new functionality for or on top of
+eZ Platform.
 
-Like most development guidelines these aims to improve security, maintainability, performance and readability of our software. They follow industry standards but sometimes extend them to cater specifically to our needs for eZ Platform ecosystem. The next sections will cover all relevant technologies from a high level point of view.
+Like most development guidelines these aims to improve security, maintainability, performance,
+and readability of our software. They follow industry standards but sometimes extend them to cater
+specifically to our needs for eZ Platform ecosystem. The next sections will cover all relevant
+technologies from a high level point of view.
+
+## Source code
+
+eZ Platform Open Source Edition codebase is available at [GitHub eZ Systems organization](https://github.com/ezsystems).
+Most of the source code which provides features is scattered across various packages (GitHub repositories), e.g.:
+
+- [ezpublish-kernel](https://github.com/ezsystems/ezpublish-kernel), which provides Public and REST API
+and implements Legacy Storage persistence layer.
+- [ezplatform-admin-ui](https://github.com/ezsystems/ezplatform-admin-ui), which provides
+administration interface (a.k.a. AdminUI, back office) for eZ Platform.
+
+## Contribution workflow
+
+In general the workflow for making a contributions is as follows:
+
+1. Report a JIRA issue.
+2. Clone the proper repository.
+3. Create your own branch.
+4. Make changes and commit them.
+5. Push the branch with your changes and create a pull request.
+6. Describe pull request
+7. Make sure Travis CI shows that all checks (jobs) have passed.
+8. Ask for a code review.
+9. Address the requested changes after a code review.
+10. If everything is in order wait for our Quality Assurance Team to test the changes.
+11. Address the issues found during testing, if any.
+12. Once QA approves, ask a package maintainer to merge changes (usually handled by eZ Engineering
+    automatically).
+
+## JIRA issue tracker
+
+Whether you've found a bug or want to add new feature, it requires JIRA issue reported on
+https://jira.ez.no/browse/EZP or https://jira.ez.no/browse/EZEE for Open Source or Enterprise
+Editions respectively.
+If you don't have an account there yet, you can [sign up here](https://login.ez.no/register).
+
+There are two types of issues we support right now: "Bug" and "Story". Other types of issues will be
+disregarded.
+
+In case of bugs, exact steps to reproduce are required in order for us to understand what is
+happening and how it can be tested.
+
+In case of new features there are a few more things to pay attention to:
+
+- Issue Type should be a `Story` in a form of `As a <persona type> I want <to do something>`,
+where `persona type` is one of the following:
+    - User - related to features intended for end-users of the application.
+    - Administrator - related to administrative tasks like creating Content Types, Languages, Roles, etc.
+    - Editor - related to editorial tasks and workflow.
+    - Developer - related to extensibility points and developer experience improvements.
+    - Maintainer - related to dev-ops activities such as installing and setting up eZ Platform.
+
+- New feature cannot break existing features for other users.
+
+## Packages and their versions
+
+@todo describe
+
+## Working with source code on GitHub
+
+Contributing to eZ Platform OSS packages is done by forking specific package to Developer's own
+GitHub account and cloning package repository from that fork.
+
+After cloning a repository from GitHub, checkout proper branch and from that branch
+create a feature or a patch branch for Stories or Bugs respectively.
+
+Branch name should be formed using small caps, separated by dashes and should start with
+JIRA issue number followed by brief, descriptive keywords related to a change, e.g.:
+`ezp-25590-dev-contribution-guide`.
+
+Do your changes and commit them to your branch. Commits should be formed in **past tense** stating
+what the given commit did, e.g. `Implemented ContentService::publishVersion API` or
+`Fixed incorrect number of arguments passed to SomeClass::someMethod`.
+
+For better readability it is recommended to keep initial commit message 72 at most characters long
+and put more detailed description in commit description field.
+Commits should be atomic. If a feature or a bug requires changes which can be described separately
+(e.g. affecting several parts of a system), each such change should be committed separately.
+
+When working either on a feature or a bug fix, **make sure to include tests**. Solution without tests
+isn't considered as valid. Tests protect us against future regressions and allow others to fully
+understand the issue at hand.
+
+## Making pull requests
+
+After committing changes, to contribute them to the upstream, push your branch to your fork and
+[create a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
+
+Pull request title needs to lead with JIRA issue number, followed by colon and issue title.
+Title should be formed in past tense (stating what PR changed or fixed with respect to the package
+source code), e.g.: `EZP-25590: Added contribution guide for developers`.
+
+If a pull request description contains already pre-defined templates (applies to some repositories),
+make sure to edit that template to address all the necessary questions. If a checklist
+(or a TODO list) is given, make sure to address that as well.
+
+Make your pull request description as detailed as possible. Pull requests undergo a code review
+process, so the better the description, the smoother the process is. Before posting a pull request,
+review the changes yourself. Think about reviewers of your code. Think what might not be clear at
+first when looking through your suggested changes and try to explain that in the pull request
+description.
+
+After making a pull request, Travis CI will kick in, automatically executing some predefined test
+jobs. All jobs need to pass, before a pull request can be processed further.
+
+Once everything is in order, ask for a code review. If you don't know who to ask, there are several
+possibilities:
+
+- Visit [eZ Community Slack](http://ez-community-on-slack.herokuapp.com). After signing up find a
+  proper channel related to a eZ Platform version you've contributed to e.g.: `#ezplatform-v2`,
+  `#ezplatform-v3` and ask for a review.
+- Find the latest contributors from eZ Systems organization to the package you've created a pull
+  request for and ping them directly.
+- Ping `@ezsystems/engineering-team` for a review.
+
+The general rule is that the pull request requires at least 2 approvals from the eZ Engineering Team
+before it can be processed further. Please note that this process might take significant amount of
+time due to our other tasks. If you're our Partner or Customer you can speed it up by reaching out
+to our Customer Success Team so a review can be scheduled during our planning (plannings are done
+usually every two weeks).
+
+Contributing to eZ Platform Enterprise Edition packages is allowed only to specific people as the
+source code is closed (packages are private). If you have access and ability to contribute, there is
+just one difference - you need to push your feature or patch branch directly to the `ezsystems`
+organization due to the technical limitations of our CI pipeline.
+
+**Keep in mind that if some of those steps are not followed, your pull request will not be
+processed**.
 
 ## HTTP
 
